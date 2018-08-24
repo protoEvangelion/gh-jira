@@ -1,4 +1,9 @@
 import { Command, flags } from '@oclif/command'
+import { log } from '../logger'
+import RestApiClient from '../rest-api-client'
+
+var config = base.getConfig(true)
+var jiraConfig = config.plugins.jira
 
 export default class Jira extends Command {
   static aliases = ['ji']

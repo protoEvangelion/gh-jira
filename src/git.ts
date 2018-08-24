@@ -1,5 +1,6 @@
 import * as fs from 'fs'
 import * as path from 'path'
+import * as gitlog from 'gitlog'
 
 export function getCurrentBranchName(pathName = process.cwd()): string | boolean {
   const gitHeadPath = `${pathName}/.git/HEAD`
@@ -22,11 +23,16 @@ function parseBranchName(gitPath): string {
     .split('/')[2]
 }
 
-const gitlog = require('gitlog')
+function getCommitMessage(numberOfCommits = 1) {
+  interface IOptions {
+    subject
+  }
 
-const gitHeadPath = `${process.cwd()}`
+  const options = { repo: process.cwd(), number: numberOfCommits, fields: ['subject'] }
+  const commits: IOptions[] = gitlog(options)
+  const commitMessages: string[] = commits.map(commit => commit.subject)
 
-const options = { repo: gitHeadPath, number: 5, fields: ['subject'] }
+  return commitMessages
+}
 
-let commits = gitlog(options)
-console.log(commits.map(commit => commit.subject))
+console.log(getCommitMessage(5))
