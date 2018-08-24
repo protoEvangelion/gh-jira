@@ -1,4 +1,4 @@
-import {Command, flags} from '@oclif/command'
+import { Command, flags } from '@oclif/command'
 
 export default class Jira extends Command {
   static aliases = ['ji']
@@ -19,13 +19,15 @@ hello world from ./src/hello.ts!
 `,
   ]
 
-  static flags = {
-    help: flags.help({char: 'h'}),
+  public static flags = {
+    help: flags.help({ char: 'h' }),
+
+    status: flags.boolean({ char: 's', description: 'Show current status of the issue' }),
   }
 
   async run() {
-    const {args, flags} = this.parse(Jira)
+    const { args } = this.parse(Jira)
 
-
+    console.log('args', args.issue)
   }
 }
